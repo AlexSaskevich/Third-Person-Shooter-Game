@@ -14,5 +14,5 @@ PointerAlignment: Left
 AllowShortIfStatementsOnASingleLine: true
 SpacesBeforeTrailingComments: 2
 AllowShortCaseLabelsOnASingleLine: true
-IndentCaseLabels: false
+IndentCaseLabels: true
 AlwaysBreakTemplateDeclarations: Yes
