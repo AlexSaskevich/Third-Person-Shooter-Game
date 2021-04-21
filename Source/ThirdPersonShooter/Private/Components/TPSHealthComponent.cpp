@@ -16,6 +16,8 @@ void UTPSHealthComponent::BeginPlay()
 {
     Super::BeginPlay();
 
+    check(MaxHealth > 0);
+
     SetHealth(MaxHealth);
 
     AActor* ComponentOwner = GetOwner();
@@ -25,11 +27,10 @@ void UTPSHealthComponent::BeginPlay()
     }
 }
 
-void UTPSHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
-                                          class AController* InstigatedBy, AActor* DamageCauser)
+void UTPSHealthComponent::OnTakeAnyDamage(
+    AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
 {
-    if (Damage <= 0.0f || IsDead() || !GetWorld())
-        return;
+    if (Damage <= 0.0f || IsDead() || !GetWorld()) return;
 
     SetHealth(Health - Damage);
 
@@ -60,4 +61,3 @@ void UTPSHealthComponent::SetHealth(float NewHealth)
     Health = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
     OnHealthChanged.Broadcast(Health);
 }
-
