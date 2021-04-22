@@ -2,6 +2,7 @@
 
 #include "UI/TPSGameHUD.h"
 #include "Engine/Canvas.h"
+#include "Blueprint/UserWidget.h"
 
 void ATPSGameHUD::DrawHUD()
 {
@@ -9,6 +10,16 @@ void ATPSGameHUD::DrawHUD()
     Super::DrawHUD();
 
     DrawCrossHair();
+}
+
+void ATPSGameHUD::BeginPlay() 
+{
+    Super::BeginPlay();
+    auto PlayerHUDWidget = CreateWidget<UUserWidget>(GetWorld(), PlayerHUDWidgetClass);
+    if (PlayerHUDWidget)
+    {
+        PlayerHUDWidget->AddToViewport();
+    }
 }
 
 void ATPSGameHUD::DrawCrossHair()
