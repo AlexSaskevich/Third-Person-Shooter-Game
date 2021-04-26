@@ -9,7 +9,7 @@ void ATPSGameHUD::DrawHUD()
 
     Super::DrawHUD();
 
-    DrawCrossHair();
+    //DrawCrossHair();
 }
 
 void ATPSGameHUD::BeginPlay() 

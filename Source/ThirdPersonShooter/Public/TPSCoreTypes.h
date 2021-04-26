@@ -2,7 +2,7 @@
 
 #include "TPSCoreTypes.generated.h"
 
-//weapon
+// weapon
 class ATPSBaseWeapon;
 
 DECLARE_MULTICAST_DELEGATE(FOnClipEmptySignature);
@@ -34,6 +34,17 @@ struct FWeaponData
     UAnimMontage* ReloadAnimMontage;
 };
 
+USTRUCT(BlueprintType)
+struct FWeaponUIData
+{
+    GENERATED_USTRUCT_BODY()
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
+    UTexture2D* MainIcon;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
+    UTexture2D* CrossHairIcon;
+};
 // health
 DECLARE_MULTICAST_DELEGATE(FOnDeathSignature);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, float);

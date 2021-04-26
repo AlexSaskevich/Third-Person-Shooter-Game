@@ -195,3 +195,23 @@ void UTPSWeaponComponent::ChangeClip()
     ReloadAnimInProgress = true;
     PlayAnimMontage(CurrentRealoadAnimMontage);
 }
+
+bool UTPSWeaponComponent::GetCurrentWeaponUIData(FWeaponUIData& UIData) const
+{
+    if (CurrentWeapon)
+    {
+        UIData = CurrentWeapon->GetUIData();
+        return true;
+    }
+    return false;
+}
+
+bool UTPSWeaponComponent::GetCurrentWeaponAmmoData(FAmmoData& AmmoData) const
+{
+    if (CurrentWeapon)
+    {
+        AmmoData = CurrentWeapon->GetAmmoData();
+        return true;
+    }
+    return false;
+}
