@@ -3,14 +3,11 @@
 #include "UI/TPSPlayerHUDWidget.h"
 #include "Components/TPSHealthComponent.h"
 #include "Components/TPSWeaponComponent.h"
+#include "TPSUtils.h"
 
 float UTPSPlayerHUDWidget::GetHealthPercent() const
 {
-    const auto Player = GetOwningPlayerPawn();
-    if (!Player) return 0.0f;
-
-    const auto Component = Player->GetComponentByClass(UTPSHealthComponent::StaticClass());
-    const auto HealthComponent = Cast<UTPSHealthComponent>(Component);
+    const auto HealthComponent = TPSUtils::GetTPSPlayerComponent<UTPSHealthComponent>(GetOwningPlayerPawn());
     if (!HealthComponent) return 0.0f;
 
     return HealthComponent->GetHealthPercent();
@@ -18,11 +15,7 @@ float UTPSPlayerHUDWidget::GetHealthPercent() const
 
 bool UTPSPlayerHUDWidget::GetCurrentWeaponUIData(FWeaponUIData& UIData) const
 {
-    const auto Player = GetOwningPlayerPawn();
-    if (!Player) return false;
-
-    const auto Component = Player->GetComponentByClass(UTPSWeaponComponent::StaticClass());
-    const auto WeaponComponent = Cast<UTPSWeaponComponent>(Component);
+    const auto WeaponComponent = TPSUtils::GetTPSPlayerComponent<UTPSWeaponComponent>(GetOwningPlayerPawn());
     if (!WeaponComponent) return false;
 
     return WeaponComponent->GetCurrentWeaponUIData(UIData);
@@ -30,12 +23,20 @@ bool UTPSPlayerHUDWidget::GetCurrentWeaponUIData(FWeaponUIData& UIData) const
 
 bool UTPSPlayerHUDWidget::GetCurrentWeaponAmmoData(FAmmoData& AmmoData) const
 {
-    const auto Player = GetOwningPlayerPawn();
-    if (!Player) return false;
+    const auto WeaponComponent = TPSUtils::GetTPSPlayerComponent<UTPSWeaponComponent>(GetOwningPlayerPawn());
+    if (!WeaponComponent) return false;
 
-    const auto Component = Player->GetComponentByClass(UTPSWeaponComponent::StaticClass());
-    const auto AmmoComponent = Cast<UTPSWeaponComponent>(Component);
-    if (!AmmoComponent) return false;
+    return WeaponComponent->GetCurrentWeaponAmmoData(AmmoData);
+}
 
-    return AmmoComponent->GetCurrentWeaponAmmoData(AmmoData);
+bool UTPSPlayerHUDWidget::IsPlayerAlive() const
+{
+    const auto HealthComponent = TPSUtils::GetTPSPlayerComponent<UTPSHealthComponent>(GetOwningPlayerPawn());
+    return HealthComponent && !HealthComponent->IsDead();
+}
+
+bool UTPSPlayerHUDWidget::IsPlayerSpectating() const
+{
+    const auto Controller = GetOwningPlayer();
+    return Controller && Controller->GetStateName() == NAME_Spectating;
 }
