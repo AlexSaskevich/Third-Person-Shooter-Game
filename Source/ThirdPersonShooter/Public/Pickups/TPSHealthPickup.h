@@ -9,6 +9,8 @@
 UCLASS()
 class THIRDPERSONSHOOTER_API ATPSHealthPickup : public ATPSBasePickup
 {
-	GENERATED_BODY()
-	
+    GENERATED_BODY()
+
+private:
+    virtual bool GivePickupTo(APawn* PlayerPawn) override;
 };

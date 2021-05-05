@@ -26,8 +26,9 @@ public:
     bool CanReload() const;
 
     FWeaponUIData GetUIData() const { return UIData; }
-
     FAmmoData GetAmmoData() const { return CurrentAmmo; }
+
+    bool TryToAddAmmo(int32 ClipsAmount);
 
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
@@ -48,7 +49,6 @@ protected:
     virtual void BeginPlay() override;
 
     virtual void MakeShot();
-
     virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
 
     APlayerController* GetPlayerController() const;
@@ -61,6 +61,8 @@ protected:
     bool IsAmmoEmpty() const;
     bool IsClipEmpty() const;
     void LogAmmo();
+
+    bool IsAmmoFull() const;
 
 private:
     FAmmoData CurrentAmmo;
