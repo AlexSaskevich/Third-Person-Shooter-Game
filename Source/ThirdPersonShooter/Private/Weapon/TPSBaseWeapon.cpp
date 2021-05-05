@@ -104,7 +104,7 @@ void ATPSBaseWeapon::ChangeClip()
 {
     if (!CurrentAmmo.Infinite)
     {
-        if (CurrentAmmo.Clips==0)
+        if (CurrentAmmo.Clips == 0)
         {
             UE_LOG(LogBaseWeapon, Warning, TEXT("+++++++++++ No more clips +++++++++++"));
             return;
@@ -115,7 +115,8 @@ void ATPSBaseWeapon::ChangeClip()
     UE_LOG(LogBaseWeapon, Display, TEXT("+++++++++++ Change Clip +++++++++++"));
 }
 
-bool ATPSBaseWeapon::CanReload() const {
+bool ATPSBaseWeapon::CanReload() const
+{
     return CurrentAmmo.Bullets < DefaultAmmo.Bullets && CurrentAmmo.Clips > 0;
 }
 
