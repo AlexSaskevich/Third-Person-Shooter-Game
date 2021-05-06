@@ -26,9 +26,12 @@ public:
 
     float GetHealth() const { return Health; }
 
+    bool TryToAddHealth(int32 HealthAmount);
+    bool IsHealthFull() const;
+
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health", meta = (ClampMin = "0.0", ClampMax = "1000.0"))
-    float MaxHealth = 100.f;
+    float MaxHealth = 100.0f;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal")
     bool AutoHeal = true;

@@ -50,7 +50,7 @@ void UTPSHealthComponent::HealUpdate()
 {
     SetHealth(Health + HealModifier);
 
-    if (IsHealthFull() && GetWorld())
+    if (FMath::IsNearlyEqual(Health, MaxHealth) && GetWorld())
     {
         GetWorld()->GetTimerManager().ClearTimer(HealTimerHandle);
     }
@@ -64,13 +64,18 @@ void UTPSHealthComponent::SetHealth(float NewHealth)
 
 bool UTPSHealthComponent::IsHealthFull() const
 {
-    return FMath::IsNearlyEqual(Health, MaxHealth);
+    return MaxHealth == 100.0f;
 }
 
 bool UTPSHealthComponent::TryToAddHealth(int32 HealthAmount)
 {
-    if (IsDead() || IsHealthFull()) return false;
-
-    SetHealth(Health + HealthAmount);
-    return true;
+    if (IsHealthFull())
+    {
+        return false;
+    }
+    else
+    {
+        UE_LOG(LogHealthComponent, Display, TEXT("Health was taken!"));
+        return true;
+    }
 }

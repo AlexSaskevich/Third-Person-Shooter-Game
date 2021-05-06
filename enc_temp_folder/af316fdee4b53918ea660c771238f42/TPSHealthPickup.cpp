@@ -9,7 +9,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogHealthPickup, Display, Display);
 bool ATPSHealthPickup::GivePickupTo(APawn* PlayerPawn)
 {
     const auto HealthComponent = TPSUtils::GetTPSPlayerComponent<UTPSHealthComponent>(PlayerPawn);
-    if (!HealthComponent) return false;
+    if (!HealthComponent || HealthComponent->IsDead()) return false;
 
     return HealthComponent->TryToAddHealth(HealthAmount);
 }
