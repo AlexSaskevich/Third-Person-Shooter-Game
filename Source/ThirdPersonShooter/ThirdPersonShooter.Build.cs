@@ -8,7 +8,13 @@ public class ThirdPersonShooter : ModuleRules
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
+        PublicDependencyModuleNames.AddRange(new string[] 
+        { "Core", 
+          "CoreUObject", 
+          "Engine", 
+          "InputCore",
+          "Niagara"
+        });
 
         PrivateDependencyModuleNames.AddRange(new string[] { });
 
@@ -20,7 +26,8 @@ public class ThirdPersonShooter : ModuleRules
             "ThirdPersonShooter/Public/Weapon", 
             "ThirdPersonShooter/Public/UI",
             "ThirdPersonShooter/Public/Animations",
-            "ThirdPersonShooter/Public/Pickups"
+            "ThirdPersonShooter/Public/Pickups",
+            "ThirdPersonShooter/Public/Weapon/Components"
         });
 
         // Uncomment if you are using Slate UI
