@@ -13,7 +13,8 @@ public class ThirdPersonShooter : ModuleRules
           "CoreUObject", 
           "Engine", 
           "InputCore",
-          "Niagara"
+          "Niagara",
+          "PhysicsCore"
         });
 
         PrivateDependencyModuleNames.AddRange(new string[] { });
