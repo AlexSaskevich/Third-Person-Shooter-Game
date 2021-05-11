@@ -7,6 +7,8 @@
 #include "TPSCoreTypes.h"
 #include "TPSHealthComponent.generated.h"
 
+class UCameraShakeBase;
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class THIRDPERSONSHOOTER_API UTPSHealthComponent : public UActorComponent
 {
@@ -45,6 +47,9 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal", meta = (EditCondition = "AutoHeal"))
     float HealModifier = 1.0f;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    TSubclassOf<UCameraShakeBase> CameraShake;
+
     virtual void BeginPlay() override;
 
 private:
@@ -57,4 +62,6 @@ private:
 
     void SetHealth(float NewHealth);
     void HealUpdate();
+
+    void PlayCameraShake();
 };
