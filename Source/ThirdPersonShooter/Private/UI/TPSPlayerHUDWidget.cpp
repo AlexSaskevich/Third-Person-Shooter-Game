@@ -5,6 +5,24 @@
 #include "Components/TPSWeaponComponent.h"
 #include "TPSUtils.h"
 
+bool UTPSPlayerHUDWidget::Initialize()
+{
+    const auto HealthComponent = TPSUtils::GetTPSPlayerComponent<UTPSHealthComponent>(GetOwningPlayerPawn());
+    if (HealthComponent)
+    {
+        HealthComponent->OnHealthChanged.AddUObject(this, &UTPSPlayerHUDWidget::OnHealthChanged);
+    }
+    return Super::Initialize();
+}
+
+void UTPSPlayerHUDWidget::OnHealthChanged(float Health, float HealthDelta)
+{
+    if (HealthDelta < 0.0f)
+    {
+        OnTakeDamage();
+    }
+}
+
 float UTPSPlayerHUDWidget::GetHealthPercent() const
 {
     const auto HealthComponent = TPSUtils::GetTPSPlayerComponent<UTPSHealthComponent>(GetOwningPlayerPawn());

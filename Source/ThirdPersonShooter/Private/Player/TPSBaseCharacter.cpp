@@ -44,14 +44,14 @@ void ATPSBaseCharacter::BeginPlay()
     check(GetCharacterMovement());
     check(GetMesh());
 
-    OnHealthChanged(HealthComponent->GetHealth());
+    OnHealthChanged(HealthComponent->GetHealth(), 0.0f);
     HealthComponent->OnDeath.AddUObject(this, &ATPSBaseCharacter::OnDeath);
     HealthComponent->OnHealthChanged.AddUObject(this, &ATPSBaseCharacter::OnHealthChanged);
 
     LandedDelegate.AddDynamic(this, &ATPSBaseCharacter::OnGroundLanded);
 }
 
-void ATPSBaseCharacter::OnHealthChanged(float Health)
+void ATPSBaseCharacter::OnHealthChanged(float Health, float HealthDelta)
 {
     HealthTextComponent->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), Health)));
 }
