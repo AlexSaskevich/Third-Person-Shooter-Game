@@ -7,6 +7,7 @@
 #include "TPSRifleWeapon.generated.h"
 
 class UTPSWeaponFXComponent;
+class UNiagaraComponent;
 
 UCLASS()
 class THIRDPERSONSHOOTER_API ATPSRifleWeapon : public ATPSBaseWeapon
@@ -39,5 +40,10 @@ protected:
 private:
     FTimerHandle ShotTimerHandle;
 
+    UPROPERTY()
+    UNiagaraComponent* MuzzleFXComponent;
+
     void MakeDamage(const FHitResult& HitResult);
+    void InitMuzzleFX();
+    void SetMuzzleFXVisibility(bool Visible);
 };

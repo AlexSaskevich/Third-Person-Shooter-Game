@@ -10,7 +10,7 @@ void ATPSLauncherWeapon::StartFire()
 
 void ATPSLauncherWeapon::MakeShot()
 {
-    if (!GetWorld()||IsAmmoEmpty()) return;
+    if (!GetWorld() || IsAmmoEmpty()) return;
 
     FVector TraceStart, TraceEnd;
     if (!GetTraceData(TraceStart, TraceEnd)) return;
@@ -31,4 +31,5 @@ void ATPSLauncherWeapon::MakeShot()
     }
 
     DecreaseAmmo();
+    SpawnMuzzleFX();
 }
