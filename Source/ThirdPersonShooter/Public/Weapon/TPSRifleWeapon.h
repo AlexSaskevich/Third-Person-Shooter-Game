@@ -26,9 +26,6 @@ protected:
     virtual void MakeShot() override;
     virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const override;
 
-    UPROPERTY(VisibleAnywhere, Category = "VFX")
-    UTPSWeaponFXComponent* WeaponFXComponent;
-
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float TimeBetweenShots = 0.1f;
 
@@ -43,6 +40,9 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     FString TraceTargetName = "TraceTarget";
+
+    UPROPERTY(VisibleAnywhere, Category = "VFX")
+    UTPSWeaponFXComponent* WeaponFXComponent;
 
 private:
     FTimerHandle ShotTimerHandle;
