@@ -6,6 +6,8 @@
 #include "Player/TPSBaseCharacter.h"
 #include "TPSAICharacter.generated.h"
 
+class UBehaviorTree;
+
 UCLASS()
 class THIRDPERSONSHOOTER_API ATPSAICharacter : public ATPSBaseCharacter
 {
@@ -13,4 +15,7 @@ class THIRDPERSONSHOOTER_API ATPSAICharacter : public ATPSBaseCharacter
 
 public:
     ATPSAICharacter(const FObjectInitializer& ObjInit);
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "AI")
+    UBehaviorTree* BehaviorTreeAsset;
 };

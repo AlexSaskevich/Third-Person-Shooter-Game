@@ -9,6 +9,8 @@
 UCLASS()
 class THIRDPERSONSHOOTER_API ATPSAIController : public AAIController
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
+protected:
+    virtual void OnPossess(APawn* InPawn) override;
 };
