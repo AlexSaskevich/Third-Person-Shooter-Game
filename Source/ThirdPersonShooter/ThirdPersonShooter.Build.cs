@@ -28,7 +28,8 @@ public class ThirdPersonShooter : ModuleRules
             "ThirdPersonShooter/Public/UI",
             "ThirdPersonShooter/Public/Animations",
             "ThirdPersonShooter/Public/Pickups",
-            "ThirdPersonShooter/Public/Weapon/Components"
+            "ThirdPersonShooter/Public/Weapon/Components",
+            "ThirdPersonShooter/Public/AI"
         });
 
         // Uncomment if you are using Slate UI
