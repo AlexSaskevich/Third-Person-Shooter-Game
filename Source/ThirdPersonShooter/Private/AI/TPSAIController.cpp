@@ -2,6 +2,13 @@
 
 #include "AI/TPSAIController.h"
 #include "AI/TPSAICharacter.h"
+#include "Components/TPSAIPerceptionComponent.h"
+
+ATPSAIController::ATPSAIController()
+{
+    TPSAIPerceptionComponent = CreateDefaultSubobject<UTPSAIPerceptionComponent>("TPSPerceptionComponent");
+    SetPerceptionComponent(*TPSAIPerceptionComponent);
+}
 
 void ATPSAIController::OnPossess(APawn* InPawn)
 {
@@ -14,3 +21,10 @@ void ATPSAIController::OnPossess(APawn* InPawn)
         RunBehaviorTree(TPSCharacter->BehaviorTreeAsset);
     }
 }
+
+ void ATPSAIController::Tick(float DeltaTime) 
+ {
+     Super::Tick(DeltaTime);
+     const auto AimActor = TPSAIPerceptionComponent->GetClosestEnemy();
+     SetFocus(AimActor);
+ }
