@@ -8,28 +8,31 @@ public class ThirdPersonShooter : ModuleRules
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-        PublicDependencyModuleNames.AddRange(new string[] 
-        { "Core", 
-          "CoreUObject", 
-          "Engine", 
+        PublicDependencyModuleNames.AddRange(new string[]
+        { "Core",
+          "CoreUObject",
+          "Engine",
           "InputCore",
           "Niagara",
-          "PhysicsCore"
+          "PhysicsCore",
+          "GameplayTasks",
+          "NavigationSystem"
         });
 
         PrivateDependencyModuleNames.AddRange(new string[] { });
 
-        PublicIncludePaths.AddRange(new string[] 
-        { 
-            "ThirdPersonShooter/Public/Player", 
-            "ThirdPersonShooter/Public/Components", 
-            "ThirdPersonShooter/Public/Dev", 
-            "ThirdPersonShooter/Public/Weapon", 
+        PublicIncludePaths.AddRange(new string[]
+        {
+            "ThirdPersonShooter/Public/Player",
+            "ThirdPersonShooter/Public/Components",
+            "ThirdPersonShooter/Public/Dev",
+            "ThirdPersonShooter/Public/Weapon",
             "ThirdPersonShooter/Public/UI",
             "ThirdPersonShooter/Public/Animations",
             "ThirdPersonShooter/Public/Pickups",
             "ThirdPersonShooter/Public/Weapon/Components",
-            "ThirdPersonShooter/Public/AI"
+            "ThirdPersonShooter/Public/AI",
+            "ThirdPersonShooter/Public/AI/Tasks"
         });
 
         // Uncomment if you are using Slate UI
