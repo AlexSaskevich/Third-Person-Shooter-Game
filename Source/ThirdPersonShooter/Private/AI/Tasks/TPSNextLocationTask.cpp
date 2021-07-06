@@ -13,8 +13,8 @@ UTPSNextLocationTask::UTPSNextLocationTask()
 EBTNodeResult::Type UTPSNextLocationTask::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
     const auto Controller = OwnerComp.GetAIOwner();
-    const auto BlackBoard = OwnerComp.GetBlackboardComponent();
-    if (!Controller || !BlackBoard) return EBTNodeResult::Failed;
+    const auto Blackboard = OwnerComp.GetBlackboardComponent();
+    if (!Controller || !Blackboard) return EBTNodeResult::Failed;
 
     const auto Pawn = Controller->GetPawn();
     if (!Pawn) return EBTNodeResult::Failed;
@@ -23,9 +23,16 @@ EBTNodeResult::Type UTPSNextLocationTask::ExecuteTask(UBehaviorTreeComponent& Ow
     if (!NavSys) return EBTNodeResult::Failed;
 
     FNavLocation NavLocation;
-    const auto Found = NavSys->GetRandomReachablePointInRadius(Pawn->GetActorLocation(), Radius, NavLocation);
+    auto Location = Pawn->GetActorLocation();
+    if (!SelfCenter)
+    {
+        auto CenterActor = Cast<AActor>(Blackboard->GetValueAsObject(CenterActorKey.SelectedKeyName));
+        if (!CenterActor) return EBTNodeResult::Failed;
+        Location = CenterActor->GetActorLocation();
+    }
+    const auto Found = NavSys->GetRandomReachablePointInRadius(Location, Radius, NavLocation);
     if (!Found) return EBTNodeResult::Failed;
 
-    BlackBoard->SetValueAsVector(AimLocationKey.SelectedKeyName, NavLocation.Location);
+    Blackboard->SetValueAsVector(AimLocationKey.SelectedKeyName, NavLocation.Location);
     return EBTNodeResult::Succeeded;
 }
