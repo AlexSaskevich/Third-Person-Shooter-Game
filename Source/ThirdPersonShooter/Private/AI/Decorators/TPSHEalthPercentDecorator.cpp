@@ -1,16 +1,16 @@
 // Third Person Shooter Game, All Rights Reserved.
 
-#include "AI/Decorators/TPSHEalthPercentDecorator.h"
+#include "AI/Decorators/TPSHealthPercentDecorator.h"
 #include "AIController.h"
 #include "TPSUtils.h"
 #include "Components/TPSHealthComponent.h"
 
-UTPSHEalthPercentDecorator::UTPSHEalthPercentDecorator()
+UTPSHealthPercentDecorator::UTPSHealthPercentDecorator()
 {
     NodeName = "Health Percent";
 }
 
-bool UTPSHEalthPercentDecorator::CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const
+bool UTPSHealthPercentDecorator::CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const
 {
     const auto Controller = OwnerComp.GetAIOwner();
     if (!Controller) return false;

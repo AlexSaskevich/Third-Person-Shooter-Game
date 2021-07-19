@@ -242,3 +242,16 @@ bool UTPSWeaponComponent::TryToAddAmmo(TSubclassOf<ATPSBaseWeapon> WeaponType, i
     }
     return false;
 }
+
+bool UTPSWeaponComponent::NeedAmmo(TSubclassOf<ATPSBaseWeapon> WeaponType)
+{
+    for (const auto Weapon : Weapons)
+    {
+        if (Weapon && Weapon->IsA(WeaponType))
+        {
+            return !Weapon->IsAmmoFull();
+        }
+    }
+    return false;
+}
+
