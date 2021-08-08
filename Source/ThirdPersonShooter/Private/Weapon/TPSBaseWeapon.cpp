@@ -127,7 +127,7 @@ void ATPSBaseWeapon::ChangeClip()
         CurrentAmmo.Clips--;
     }
     CurrentAmmo.Bullets = DefaultAmmo.Bullets;
-    UE_LOG(LogBaseWeapon, Display, TEXT("+++++++++++ Change Clip +++++++++++"));
+    //UE_LOG(LogBaseWeapon, Display, TEXT("+++++++++++ Change Clip +++++++++++"));
 }
 
 bool ATPSBaseWeapon::CanReload() const
