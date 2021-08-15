@@ -75,6 +75,7 @@ void ATPSGameModeBase::GameTimerUpdate()
         else
         {
             UE_LOG(LogTPSGameModeBase, Display, TEXT("=============GAME OVER!============="));
+            LogPlayerInfo();
         }
     }
 }
@@ -139,4 +140,36 @@ void ATPSGameModeBase::SetPlayerColor(AController* Controller)
     if (!PlayerState) return;
 
     Character->SetPlayerColor(PlayerState->GetTeamColor());
+}
+
+void ATPSGameModeBase::Killed(AController* KillerController, AController* VictimController)
+{
+    const auto KillerPlayerState = KillerController ? Cast<ATPSPlayerState>(KillerController->PlayerState) : nullptr;
+    const auto VictimPlayerState = VictimController ? Cast<ATPSPlayerState>(VictimController->PlayerState) : nullptr;
+
+    if (KillerPlayerState)
+    {
+        KillerPlayerState->AddKill();
+    }
+
+    if (VictimPlayerState)
+    {
+        VictimPlayerState->AddDeath();
+    }
+}
+
+void ATPSGameModeBase::LogPlayerInfo()
+{
+    if (!GetWorld()) return;
+
+    for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
+    {
+        const auto Controller = It->Get();
+        if (!Controller) continue;
+
+        const auto PlayerState = Cast<ATPSPlayerState>(Controller->PlayerState);
+        if (!PlayerState) continue;
+
+        PlayerState->LogInfo();
+    }
 }

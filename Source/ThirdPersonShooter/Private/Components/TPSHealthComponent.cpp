@@ -7,6 +7,7 @@
 #include "Engine/World.h"
 #include "TimerManager.h"
 #include "Camera/CameraShake.h"
+#include "TPSGameModeBase.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogHealthComponent, Display, Display);
 
@@ -41,6 +42,7 @@ void UTPSHealthComponent::OnTakeAnyDamage(
 
     if (IsDead())
     {
+        Killed(InstigatedBy);
         OnDeath.Broadcast();
     }
     else if (AutoHeal)
@@ -94,4 +96,17 @@ void UTPSHealthComponent::PlayCameraShake()
     if (!Controller || !Controller->PlayerCameraManager) return;
 
     Controller->PlayerCameraManager->StartCameraShake(CameraShake);
+}
+
+void UTPSHealthComponent::Killed(AController* KillerController)
+{
+    if (!GetWorld()) return;
+
+    const auto GameMode = Cast<ATPSGameModeBase>(GetWorld()->GetAuthGameMode());
+    if (!GameMode) return;
+
+    const auto Player = Cast<APawn>(GetOwner());
+    const auto VictimController = Player ? Player->Controller : nullptr;
+
+    GameMode->Killed(KillerController, VictimController);
 }

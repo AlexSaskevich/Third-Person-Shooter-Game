@@ -35,14 +35,6 @@ void ATPSBaseWeapon::StartFire() {}
 
 void ATPSBaseWeapon::StopFire() {}
 
-APlayerController* ATPSBaseWeapon::GetPlayerController() const
-{
-    const auto Player = Cast<ACharacter>(GetOwner());
-    if (!Player) return nullptr;
-
-    return Player->GetController<APlayerController>();
-}
-
 bool ATPSBaseWeapon::GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const
 {
     const auto TPSCharacter = Cast<ACharacter>(GetOwner());
@@ -50,7 +42,7 @@ bool ATPSBaseWeapon::GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRot
 
     if (TPSCharacter->IsPlayerControlled())
     {
-        const auto Controller = GetPlayerController();
+        const auto Controller = TPSCharacter->GetController<APlayerController>();
         if (!Controller) return false;
 
         Controller->GetPlayerViewPoint(ViewLocation, ViewRotation);
