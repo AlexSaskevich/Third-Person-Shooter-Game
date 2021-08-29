@@ -11,11 +11,13 @@ class UTPSRespawnComponent;
 UCLASS()
 class THIRDPERSONSHOOTER_API ATPSPlayerController : public APlayerController
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 public:
-	ATPSPlayerController();
+    ATPSPlayerController();
 
 protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     UTPSRespawnComponent* RespawnComponent;
+
+    virtual void OnPossess(APawn* InPawn) override;
 };

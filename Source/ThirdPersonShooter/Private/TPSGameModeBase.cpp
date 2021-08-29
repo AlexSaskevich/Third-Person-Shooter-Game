@@ -8,6 +8,7 @@
 #include "Player/TPSPlayerState.h"
 #include "TPSUtils.h"
 #include "Components/TPSRespawnComponent.h"
+#include "EngineUtils.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogTPSGameModeBase, All, All);
 
@@ -78,8 +79,7 @@ void ATPSGameModeBase::GameTimerUpdate()
         }
         else
         {
-            UE_LOG(LogTPSGameModeBase, Display, TEXT("=============GAME OVER!============="));
-            LogPlayerInfo();
+            GameOver();
         }
     }
 }
@@ -194,4 +194,19 @@ void ATPSGameModeBase::StartRespawn(AController* Controller)
 void ATPSGameModeBase::RespawnRequest(AController* Controller)
 {
     ResetOnePlayer(Controller);
+}
+
+void ATPSGameModeBase::GameOver()
+{
+    UE_LOG(LogTPSGameModeBase, Display, TEXT("=============GAME OVER!============="));
+    LogPlayerInfo();
+
+    for (auto Pawn : TActorRange<APawn>(GetWorld()))
+    {
+        if (Pawn)
+        {
+            Pawn->TurnOff();
+            Pawn->DisableInput(nullptr);
+        }
+    }
 }

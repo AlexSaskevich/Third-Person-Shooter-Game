@@ -7,12 +7,22 @@
 
 bool UTPSPlayerHUDWidget::Initialize()
 {
-    const auto HealthComponent = TPSUtils::GetTPSPlayerComponent<UTPSHealthComponent>(GetOwningPlayerPawn());
-    if (HealthComponent)
+    if (GetOwningPlayer())
+    {
+        GetOwningPlayer()->GetOnNewPawnNotifier().AddUObject(this, &UTPSPlayerHUDWidget::OnNewPawn);
+        OnNewPawn(GetOwningPlayerPawn());
+    }
+
+    return Super::Initialize();
+}
+
+void UTPSPlayerHUDWidget::OnNewPawn(APawn* NewPawn)
+{
+    const auto HealthComponent = TPSUtils::GetTPSPlayerComponent<UTPSHealthComponent>(NewPawn);
+    if (HealthComponent && !HealthComponent->OnHealthChanged.IsBoundToObject(this))
     {
         HealthComponent->OnHealthChanged.AddUObject(this, &UTPSPlayerHUDWidget::OnHealthChanged);
     }
-    return Super::Initialize();
 }
 
 void UTPSPlayerHUDWidget::OnHealthChanged(float Health, float HealthDelta)
