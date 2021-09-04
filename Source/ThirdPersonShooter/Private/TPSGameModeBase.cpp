@@ -31,6 +31,8 @@ void ATPSGameModeBase::StartPlay()
 
     CurrentRound = 1;
     StartRound();
+
+    SetMatchState(ETPSMatchState::InProgress);
 }
 
 UClass* ATPSGameModeBase::GetDefaultPawnClassForController_Implementation(AController* InController)
@@ -209,4 +211,14 @@ void ATPSGameModeBase::GameOver()
             Pawn->DisableInput(nullptr);
         }
     }
+
+    SetMatchState(ETPSMatchState::GameOver);
+}
+
+void ATPSGameModeBase::SetMatchState(ETPSMatchState State)
+{
+    if (MatchState == State) return;
+
+    MatchState = State;
+    OnMatchStateChanged.Broadcast(MatchState);
 }

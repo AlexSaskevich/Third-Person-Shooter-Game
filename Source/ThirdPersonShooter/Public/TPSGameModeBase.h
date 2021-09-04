@@ -17,6 +17,8 @@ class THIRDPERSONSHOOTER_API ATPSGameModeBase : public AGameModeBase
 public:
     ATPSGameModeBase();
 
+    FOnMatchStateChangedSignature OnMatchStateChanged;
+
     virtual void StartPlay() override;
     virtual UClass* GetDefaultPawnClassForController_Implementation(AController* InController) override;
 
@@ -39,6 +41,7 @@ protected:
     FGameData GameData;
 
 private:
+    ETPSMatchState MatchState = ETPSMatchState::WaitingToStart;
     int32 CurrentRound = 1;
     int32 RoundCountDown = 0;
     FTimerHandle GameRoundTimerHandle;
@@ -59,4 +62,6 @@ private:
     void StartRespawn(AController* Controller);
 
     void GameOver();
+
+    void SetMatchState(ETPSMatchState State);
 };

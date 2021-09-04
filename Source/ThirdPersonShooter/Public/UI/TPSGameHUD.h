@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
+#include "TPSCoreTypes.h"
 #include "TPSGameHUD.generated.h"
 
 UCLASS()
@@ -22,4 +23,5 @@ protected:
 
 private:
     void DrawCrossHair();
+    void OnMatchStateChanged(ETPSMatchState State);
 };

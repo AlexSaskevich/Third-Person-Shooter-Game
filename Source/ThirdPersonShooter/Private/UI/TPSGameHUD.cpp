@@ -3,6 +3,9 @@
 #include "UI/TPSGameHUD.h"
 #include "Engine/Canvas.h"
 #include "Blueprint/UserWidget.h"
+#include "TPSGameModeBase.h"
+
+DEFINE_LOG_CATEGORY_STATIC(LogTPSGameHUD, All, All);
 
 void ATPSGameHUD::DrawHUD()
 {
@@ -20,7 +23,24 @@ void ATPSGameHUD::BeginPlay()
     {
         PlayerHUDWidget->AddToViewport();
     }
+
+    if (GetWorld())
+    {
+        const auto GameMode = Cast<ATPSGameModeBase>(GetWorld()->GetAuthGameMode());
+        if (GameMode)
+        {
+            GameMode->OnMatchStateChanged.AddUObject(this, &ATPSGameHUD::OnMatchStateChanged);
+        }
+    }
 }
+
+void ATPSGameHUD::OnMatchStateChanged(ETPSMatchState State) 
+{
+ 
+    UE_LOG(LogTPSGameHUD, Display, TEXT("Match State Changed: %s"), *UEnum::GetValueAsString(State)); 
+
+}
+
 
 void ATPSGameHUD::DrawCrossHair()
 {
@@ -33,3 +53,4 @@ void ATPSGameHUD::DrawCrossHair()
     DrawLine(Center.Min-HalfLineSize, Center.Max, Center.Min + HalfLineSize, Center.Max, LineColor, LineThickness);
     DrawLine(Center.Min, Center.Max - HalfLineSize, Center.Min, Center.Max + HalfLineSize, LineColor, LineThickness);
 }
+
