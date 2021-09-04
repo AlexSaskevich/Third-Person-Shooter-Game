@@ -12,6 +12,6 @@ class THIRDPERSONSHOOTER_API UTPSSpectatorWidget : public UUserWidget
     GENERATED_BODY()
 
 public:
-    UFUNCTION(BlueprintCallable, Category = "UI ")
+    UFUNCTION(BlueprintCallable, Category = "UI")
     bool GetRespawnTime(int32& CountDownTime) const;
 };

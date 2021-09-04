@@ -4,15 +4,14 @@
 #include "Gameframework/GameModeBase.h"
 #include "Components/Button.h"
 
-bool UTPSPauseWidget::Initialize()
+void UTPSPauseWidget::NativeOnInitialized()
 {
-    const auto InitStatus = Super::Initialize();
+    Super::NativeOnInitialized();
+
     if (ClearPauseButton)
     {
         ClearPauseButton->OnClicked.AddDynamic(this, &UTPSPauseWidget::OnClearPause);
     }
-
-    return InitStatus;
 }
 
 void UTPSPauseWidget::OnClearPause()

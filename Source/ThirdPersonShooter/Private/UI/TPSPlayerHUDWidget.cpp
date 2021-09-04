@@ -5,15 +5,15 @@
 #include "Components/TPSWeaponComponent.h"
 #include "TPSUtils.h"
 
-bool UTPSPlayerHUDWidget::Initialize()
+void UTPSPlayerHUDWidget::NativeOnInitialized()
 {
+    Super::NativeOnInitialized();
+
     if (GetOwningPlayer())
     {
         GetOwningPlayer()->GetOnNewPawnNotifier().AddUObject(this, &UTPSPlayerHUDWidget::OnNewPawn);
         OnNewPawn(GetOwningPlayerPawn());
     }
-
-    return Super::Initialize();
 }
 
 void UTPSPlayerHUDWidget::OnNewPawn(APawn* NewPawn)
