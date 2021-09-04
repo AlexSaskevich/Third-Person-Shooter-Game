@@ -222,3 +222,26 @@ void ATPSGameModeBase::SetMatchState(ETPSMatchState State)
     MatchState = State;
     OnMatchStateChanged.Broadcast(MatchState);
 }
+
+bool ATPSGameModeBase::SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate)
+{
+    const auto PauseSet = Super::SetPause(PC, CanUnpauseDelegate);
+
+    if (PauseSet)
+    {
+        SetMatchState(ETPSMatchState::Pause);
+    }
+
+    return PauseSet;
+}
+
+bool ATPSGameModeBase::ClearPause()
+{
+    const auto PauseCleared = Super::ClearPause();
+    if (PauseCleared)
+    {
+        SetMatchState(ETPSMatchState::InProgress);
+    }
+
+    return PauseCleared;
+}

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "TPSCoreTypes.h"
 #include "GameFramework/PlayerController.h"
 #include "TPSPlayerController.generated.h"
 
@@ -19,5 +20,11 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     UTPSRespawnComponent* RespawnComponent;
 
+    virtual void BeginPlay() override;
     virtual void OnPossess(APawn* InPawn) override;
+    virtual void SetupInputComponent() override;
+
+private:
+    void OnPauseGame();
+    void OnMatchStateChanged(ETPSMatchState State);
 };

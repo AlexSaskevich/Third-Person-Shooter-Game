@@ -12,16 +12,23 @@ void ATPSGameHUD::DrawHUD()
 
     Super::DrawHUD();
 
-    //DrawCrossHair();
+    // DrawCrossHair();
 }
 
-void ATPSGameHUD::BeginPlay() 
+void ATPSGameHUD::BeginPlay()
 {
     Super::BeginPlay();
-    auto PlayerHUDWidget = CreateWidget<UUserWidget>(GetWorld(), PlayerHUDWidgetClass);
-    if (PlayerHUDWidget)
+
+    GameWidgets.Add(ETPSMatchState::InProgress, CreateWidget<UUserWidget>(GetWorld(), PlayerHUDWidgetClass));
+    GameWidgets.Add(ETPSMatchState::Pause, CreateWidget<UUserWidget>(GetWorld(), PauseWidgetClass));
+
+    for (auto GameWidgetPair : GameWidgets)
     {
-        PlayerHUDWidget->AddToViewport();
+        const auto GameWidget = GameWidgetPair.Value;
+        if (!GameWidget) continue;
+
+        GameWidget->AddToViewport();
+        GameWidget->SetVisibility(ESlateVisibility::Hidden);
     }
 
     if (GetWorld())
@@ -34,13 +41,25 @@ void ATPSGameHUD::BeginPlay()
     }
 }
 
-void ATPSGameHUD::OnMatchStateChanged(ETPSMatchState State) 
+void ATPSGameHUD::OnMatchStateChanged(ETPSMatchState State)
 {
- 
-    UE_LOG(LogTPSGameHUD, Display, TEXT("Match State Changed: %s"), *UEnum::GetValueAsString(State)); 
+    if (CurrentWidget)
+    {
+        CurrentWidget->SetVisibility(ESlateVisibility::Hidden);
+    }
 
+    if (GameWidgets.Contains(State))
+    {
+        CurrentWidget = GameWidgets[State];
+    }
+
+    if (CurrentWidget)
+    {
+        CurrentWidget->SetVisibility(ESlateVisibility::Visible);
+    }
+
+    UE_LOG(LogTPSGameHUD, Display, TEXT("Match State Changed: %s"), *UEnum::GetValueAsString(State));
 }
-
 
 void ATPSGameHUD::DrawCrossHair()
 {
@@ -50,7 +69,6 @@ void ATPSGameHUD::DrawCrossHair()
     const float LineThickness = 2.0f;
     const FLinearColor LineColor = FLinearColor::Green;
 
-    DrawLine(Center.Min-HalfLineSize, Center.Max, Center.Min + HalfLineSize, Center.Max, LineColor, LineThickness);
+    DrawLine(Center.Min - HalfLineSize, Center.Max, Center.Min + HalfLineSize, Center.Max, LineColor, LineThickness);
     DrawLine(Center.Min, Center.Max - HalfLineSize, Center.Min, Center.Max + HalfLineSize, LineColor, LineThickness);
 }
-
