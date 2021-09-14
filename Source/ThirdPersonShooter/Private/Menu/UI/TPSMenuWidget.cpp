@@ -3,6 +3,9 @@
 #include "Menu/UI/TPSMenuWidget.h"
 #include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
+#include "TPSGameInstance.h"
+
+DEFINE_LOG_CATEGORY_STATIC(LogTPSMenuWidget, All, All);
 
 void UTPSMenuWidget::NativeOnInitialized()
 {
@@ -16,6 +19,16 @@ void UTPSMenuWidget::NativeOnInitialized()
 
 void UTPSMenuWidget::OnStartGame()
 {
-    const FName StartupLevelName = "TestLevel";
-    UGameplayStatics::OpenLevel(this, StartupLevelName);
+    if (!GetWorld()) return;
+
+    const auto TPSGameInstance = GetWorld()->GetGameInstance<UTPSGameInstance>();
+    if (!TPSGameInstance) return;
+
+    if (TPSGameInstance->GetStartupLevelName().IsNone())
+    {
+        UE_LOG(LogTPSMenuWidget, Error, TEXT("Level name is NONE"));
+        return;
+    }
+
+    UGameplayStatics::OpenLevel(this, TPSGameInstance->GetStartupLevelName());
 }
