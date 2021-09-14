@@ -4,9 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "TPSCoreTypes.h"
 #include "TPSMenuWidget.generated.h"
 
 class UButton;
+class UHorizontalBox;
+class UTPSGameInstance;
+class UTPSLevelItemWidget;
 
 UCLASS()
 class THIRDPERSONSHOOTER_API UTPSMenuWidget : public UUserWidget
@@ -17,9 +21,28 @@ protected:
     UPROPERTY(meta = (BindWidget))
     UButton* StartGameButton;
 
+    UPROPERTY(meta = (BindWidget))
+    UButton* QuitGameButton;
+
+    UPROPERTY(meta = (BindWidget))
+    UHorizontalBox* LevelItemsBox;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
+    TSubclassOf<UUserWidget> LevelItemWidgetClass;
+
     virtual void NativeOnInitialized() override;
 
 private:
+    UPROPERTY()
+    TArray<UTPSLevelItemWidget*> LevelItemWidgets;
+
     UFUNCTION()
     void OnStartGame();
+
+    UFUNCTION()
+    void OnQuitGame();
+
+    void InitLevelItems();
+    void OnLevelSelected(const FLevelData& Data);
+    UTPSGameInstance* GetTPSGameInstance() const;
 };
