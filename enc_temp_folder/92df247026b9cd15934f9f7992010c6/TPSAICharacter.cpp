@@ -25,7 +25,6 @@ ATPSAICharacter::ATPSAICharacter(const FObjectInitializer& ObjInit)
     HealthWidgetComponent = CreateDefaultSubobject<UWidgetComponent>("HealthWidgetComponent");
     HealthWidgetComponent->SetupAttachment(GetRootComponent());
     HealthWidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
-    HealthWidgetComponent->SetDrawAtDesiredSize(true);
 }
 
 void ATPSAICharacter::BeginPlay()
@@ -33,12 +32,6 @@ void ATPSAICharacter::BeginPlay()
     Super::BeginPlay();
 
     check(HealthWidgetComponent);
-}
-
-void ATPSAICharacter::Tick(float DeltaTime)
-{
-    Super::Tick(DeltaTime);
-    UpdateHealthWidgetVisibility();
 }
 
 void ATPSAICharacter::OnDeath()
@@ -59,13 +52,4 @@ void ATPSAICharacter::OnHealthChanged(float Health, float HealthDelta)
     const auto HealthBarWidget = Cast<UTPSHealthBarWidget>(HealthWidgetComponent->GetUserWidgetObject());
     if (!HealthBarWidget) return;
     HealthBarWidget->SetHealthPercent(HealthComponent->GetHealthPercent());
-}
-
-void ATPSAICharacter::UpdateHealthWidgetVisibility()
-{
-    if (!GetWorld() || !GetWorld()->GetFirstPlayerController() || !!GetWorld()->GetFirstPlayerController()->GetPawnOrSpectator()) return;
-
-    const auto PlayerLocation = GetWorld()->GetFirstPlayerController()->GetPawnOrSpectator()->GetActorLocation();
-    const auto Distance = FVector::Distance(PlayerLocation, GetActorLocation());
-    HealthWidgetComponent->SetVisibility(Distance < HealthVisibilityDistance, true);
 }

@@ -25,7 +25,8 @@ public:
     void SetSelected(bool IsSelected);
 
 protected:
-    UPROPERTY(meta = (BindWidget)) UButton* LevelSelectButton;
+    UPROPERTY(meta = (BindWidget))
+    UButton* LevelSelectButton;
 
     UPROPERTY(meta = (BindWidget))
     UTextBlock* LevelNameTextBlock;
