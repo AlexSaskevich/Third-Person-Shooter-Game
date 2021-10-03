@@ -12,6 +12,8 @@ void UTPSLevelItemWidget::NativeOnInitialized()
     if (LevelSelectButton)
     {
         LevelSelectButton->OnClicked.AddDynamic(this, &UTPSLevelItemWidget::OnLevelItemClicked);
+        LevelSelectButton->OnHovered.AddDynamic(this, &UTPSLevelItemWidget::OnLevelItemHovered);
+        LevelSelectButton->OnUnhovered.AddDynamic(this, &UTPSLevelItemWidget::OnLevelItemUnhovered);
     }
 }
 
@@ -37,8 +39,24 @@ void UTPSLevelItemWidget::SetLevelData(const FLevelData& Data)
 
 void UTPSLevelItemWidget::SetSelected(bool IsSelected)
 {
+    if (LevelImage)
+    {
+        LevelImage->SetColorAndOpacity(IsSelected ? FLinearColor::Red : FLinearColor::White);
+    }
+}
+
+void UTPSLevelItemWidget::OnLevelItemHovered()
+{
     if (FrameImage)
     {
-        FrameImage->SetVisibility(IsSelected ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+        FrameImage->SetVisibility(ESlateVisibility::Visible);
+    }
+}
+
+void UTPSLevelItemWidget::OnLevelItemUnhovered()
+{
+    if (FrameImage)
+    {
+        FrameImage->SetVisibility(ESlateVisibility::Hidden);
     }
 }

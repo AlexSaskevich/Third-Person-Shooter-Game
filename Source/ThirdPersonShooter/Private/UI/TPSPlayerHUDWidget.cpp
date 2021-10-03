@@ -4,6 +4,8 @@
 #include "Components/TPSHealthComponent.h"
 #include "Components/TPSWeaponComponent.h"
 #include "TPSUtils.h"
+#include "Components/ProgressBar.h"
+#include "Player/TPSPlayerState.h"
 
 void UTPSPlayerHUDWidget::NativeOnInitialized()
 {
@@ -23,6 +25,7 @@ void UTPSPlayerHUDWidget::OnNewPawn(APawn* NewPawn)
     {
         HealthComponent->OnHealthChanged.AddUObject(this, &UTPSPlayerHUDWidget::OnHealthChanged);
     }
+    UpdateHealthBar();
 }
 
 void UTPSPlayerHUDWidget::OnHealthChanged(float Health, float HealthDelta)
@@ -31,6 +34,7 @@ void UTPSPlayerHUDWidget::OnHealthChanged(float Health, float HealthDelta)
     {
         OnTakeDamage();
     }
+    UpdateHealthBar();
 }
 
 float UTPSPlayerHUDWidget::GetHealthPercent() const
@@ -67,4 +71,37 @@ bool UTPSPlayerHUDWidget::IsPlayerSpectating() const
 {
     const auto Controller = GetOwningPlayer();
     return Controller && Controller->GetStateName() == NAME_Spectating;
+}
+
+int32 UTPSPlayerHUDWidget::GetKillsNum() const
+{
+    const auto Controller = GetOwningPlayer();
+    if (!Controller) return 0;
+
+    const auto PlayerState = Cast<ATPSPlayerState>(Controller->PlayerState);
+    return PlayerState ? PlayerState->GetKillsNum() : 0;
+}
+
+void UTPSPlayerHUDWidget::UpdateHealthBar()
+{
+    if (HealthProgressBar)
+    {
+        HealthProgressBar->SetFillColorAndOpacity(GetHealthPercent() > PercentColorThreshold ? GoodColor : BadColor);
+    }
+}
+
+FString UTPSPlayerHUDWidget::FormatBullets(int32 BulletsNum) const
+{
+    const int32 MaxLen = 3;
+    const TCHAR PrefixSymbol = '0';
+
+    auto BulletStr = FString::FromInt(BulletsNum);
+    const auto SymbolsNumToAdd = MaxLen - BulletStr.Len();
+
+    if (SymbolsNumToAdd > 0)
+    {
+        BulletStr = FString::ChrN(SymbolsNumToAdd, PrefixSymbol).Append(BulletStr);
+    }
+
+    return BulletStr;
 }
