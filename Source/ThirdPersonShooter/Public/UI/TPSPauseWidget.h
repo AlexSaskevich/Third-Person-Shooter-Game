@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "UI/TPSBaseWidget.h"
 #include "TPSPauseWidget.generated.h"
 
 class UButton;
 
 UCLASS()
-class THIRDPERSONSHOOTER_API UTPSPauseWidget : public UUserWidget
+class THIRDPERSONSHOOTER_API UTPSPauseWidget : public UTPSBaseWidget
 {
     GENERATED_BODY()
 

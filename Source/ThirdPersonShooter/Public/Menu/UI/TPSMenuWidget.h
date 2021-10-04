@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "UI/TPSBaseWidget.h"
 #include "TPSCoreTypes.h"
 #include "TPSMenuWidget.generated.h"
 
@@ -13,7 +13,7 @@ class UTPSGameInstance;
 class UTPSLevelItemWidget;
 
 UCLASS()
-class THIRDPERSONSHOOTER_API UTPSMenuWidget : public UUserWidget
+class THIRDPERSONSHOOTER_API UTPSMenuWidget : public UTPSBaseWidget
 {
     GENERATED_BODY()
 
