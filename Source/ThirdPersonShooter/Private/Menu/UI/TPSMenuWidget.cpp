@@ -76,6 +76,13 @@ void UTPSMenuWidget::OnLevelSelected(const FLevelData& Data)
 
 void UTPSMenuWidget::OnStartGame()
 {
+    PlayAnimation(HideAnimation);
+}
+
+void UTPSMenuWidget::OnAnimationFinished_Implementation(const UWidgetAnimation* Animation)
+{
+    if (Animation != HideAnimation) return;
+
     const auto TPSGameInstance = GetTPSGameInstance();
     if (!TPSGameInstance) return;
 
