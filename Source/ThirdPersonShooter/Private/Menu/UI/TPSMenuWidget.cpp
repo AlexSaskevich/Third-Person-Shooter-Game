@@ -7,6 +7,8 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Components/HorizontalBox.h"
 #include "Menu/UI/TPSLevelItemWidget.h"
+#include "Sound/SoundCue.h"
+
 DEFINE_LOG_CATEGORY_STATIC(LogTPSMenuWidget, All, All);
 
 void UTPSMenuWidget::NativeOnInitialized()
@@ -77,6 +79,7 @@ void UTPSMenuWidget::OnLevelSelected(const FLevelData& Data)
 void UTPSMenuWidget::OnStartGame()
 {
     PlayAnimation(HideAnimation);
+    UGameplayStatics::PlaySound2D(GetWorld(), StartGameSound);
 }
 
 void UTPSMenuWidget::OnAnimationFinished_Implementation(const UWidgetAnimation* Animation)
