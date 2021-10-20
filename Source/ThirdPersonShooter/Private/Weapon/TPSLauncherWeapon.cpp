@@ -2,6 +2,8 @@
 
 #include "Weapon/TPSLauncherWeapon.h"
 #include "Weapon/TPSProjectile.h"
+#include "Sound/SoundCue.h"
+#include "Kismet/GameplayStatics.h"
 
 void ATPSLauncherWeapon::StartFire()
 {
@@ -10,7 +12,13 @@ void ATPSLauncherWeapon::StartFire()
 
 void ATPSLauncherWeapon::MakeShot()
 {
-    if (!GetWorld() || IsAmmoEmpty()) return;
+    if (!GetWorld()) return;
+
+    if (IsAmmoEmpty())
+    {
+        UGameplayStatics::SpawnSoundAtLocation(GetWorld(), NoAmmoSound, GetActorLocation());
+        return;
+    }
 
     FVector TraceStart, TraceEnd;
     if (!GetTraceData(TraceStart, TraceEnd)) return;
@@ -32,4 +40,5 @@ void ATPSLauncherWeapon::MakeShot()
 
     DecreaseAmmo();
     SpawnMuzzleFX();
+    UGameplayStatics::SpawnSoundAttached(FireSound, WeaponMesh, MuzzleSocketName);
 }
