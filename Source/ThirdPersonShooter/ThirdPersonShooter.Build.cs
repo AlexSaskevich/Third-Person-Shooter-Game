@@ -37,7 +37,8 @@ public class ThirdPersonShooter : ModuleRules
             "ThirdPersonShooter/Public/AI/EQS",
             "ThirdPersonShooter/Public/AI/Decorators",
             "ThirdPersonShooter/Public/Menu",
-           "ThirdPersonShooter/Public/Menu/UI"
+            "ThirdPersonShooter/Public/Menu/UI",
+            "ThirdPersonShooter/Public/Sound",
         });
 
         // Uncomment if you are using Slate UI

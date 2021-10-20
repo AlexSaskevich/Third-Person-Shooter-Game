@@ -3,6 +3,7 @@
 #include "Player/TPSPlayerController.h"
 #include "Components/TPSRespawnComponent.h"
 #include "TPSGameModeBase.h"
+#include "TPSGameInstance.h"
 
 ATPSPlayerController::ATPSPlayerController()
 {
@@ -50,6 +51,7 @@ void ATPSPlayerController::SetupInputComponent()
     if (!InputComponent) return;
 
     InputComponent->BindAction("PauseGame", IE_Pressed, this, &ATPSPlayerController::OnPauseGame);
+    InputComponent->BindAction("Mute", IE_Pressed, this, &ATPSPlayerController::OnMuteSound);
 }
 
 void ATPSPlayerController::OnPauseGame()
@@ -57,4 +59,14 @@ void ATPSPlayerController::OnPauseGame()
     if (!GetWorld() || !GetWorld()->GetAuthGameMode()) return;
 
     GetWorld()->GetAuthGameMode()->SetPause(this);
+}
+
+void ATPSPlayerController::OnMuteSound()
+{
+    if (!GetWorld()) return;
+
+    const auto TPSGameInstance = GetWorld()->GetGameInstance<UTPSGameInstance>();
+    if (!TPSGameInstance) return;
+
+    TPSGameInstance->ToggleVolume();
 }

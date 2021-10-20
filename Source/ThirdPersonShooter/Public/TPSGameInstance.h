@@ -7,6 +7,8 @@
 #include "TPSCoreTypes.h"
 #include "TPSGameInstance.generated.h"
 
+class USoundClass;
+
 UCLASS()
 class THIRDPERSONSHOOTER_API UTPSGameInstance : public UGameInstance
 {
@@ -20,12 +22,17 @@ public:
 
     FName GetMenuLevelName() const { return MenuLevelName; }
 
+    void ToggleVolume();
+
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game", meta = (ToolTip = "Level names must be unique!"))
     TArray<FLevelData> LevelsData;
 
     UPROPERTY(EditDefaultsOnly, Category = "Game")
     FName MenuLevelName = NAME_None;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Game")
+    USoundClass* MasterSoundClass;
 
 private:
     FLevelData StartupLevel;

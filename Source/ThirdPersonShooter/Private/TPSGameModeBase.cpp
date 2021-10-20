@@ -67,7 +67,7 @@ void ATPSGameModeBase::StartRound()
 
 void ATPSGameModeBase::GameTimerUpdate()
 {
-    UE_LOG(LogTPSGameModeBase, Display, TEXT("Time: %i / Round: %i/%i"), RoundCountDown, CurrentRound, GameData.RoundsNum);
+    //UE_LOG(LogTPSGameModeBase, Display, TEXT("Time: %i / Round: %i/%i"), RoundCountDown, CurrentRound, GameData.RoundsNum);
 
     if (--RoundCountDown == 0)
     {
