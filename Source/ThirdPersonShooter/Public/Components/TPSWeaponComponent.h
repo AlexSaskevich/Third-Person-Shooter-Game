@@ -28,6 +28,8 @@ public:
     bool TryToAddAmmo(TSubclassOf<ATPSBaseWeapon> WeaponType, int32 ClipsAmount);
     bool NeedAmmo(TSubclassOf<ATPSBaseWeapon> WeaponType);
 
+    void Zoom(bool Enabled);
+
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Weapon")
     TArray<FWeaponData> WeaponData;

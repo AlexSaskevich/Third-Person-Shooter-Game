@@ -80,6 +80,7 @@ void UTPSWeaponComponent::EquipWeapon(int32 WeaponIndex)
 
     if (CurrentWeapon)
     {
+        CurrentWeapon->Zoom(false);
         CurrentWeapon->StopFire();
         AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponArmorySocketName);
     }
@@ -255,3 +256,10 @@ bool UTPSWeaponComponent::NeedAmmo(TSubclassOf<ATPSBaseWeapon> WeaponType)
     return false;
 }
 
+void UTPSWeaponComponent::Zoom(bool Enabled)
+{
+    if (CurrentWeapon)
+    {
+        CurrentWeapon->Zoom(Enabled);
+    }
+}
